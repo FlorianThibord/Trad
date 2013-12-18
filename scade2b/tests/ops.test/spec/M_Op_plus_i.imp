@@ -1,0 +1,18 @@
+IMPLEMENTATION M_Op_plus_i
+REFINES M_Op_plus
+SEES M_Enum
+
+
+
+
+
+
+OPERATIONS
+
+rr <-- Op_plus(xx, yy) =
+ VAR zz IN
+   zz := xx + yy; 
+   rr := zz
+   
+ END 
+END

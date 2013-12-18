@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Model>
+  <RootNode scadeName="Id_int" targetCycleFct="Id_int">
+    <Input scadeName="xx" scadeType="int" targetName="xx" targetType="kcg_int"/>
+    <Output scadeName="yy" scadeType="int" targetName="yy" targetType="kcg_int"/>
+    <Local scadeName="zz" scadeType="int" targetName="zz" targetType="kcg_int"/>
+  </RootNode>
+</Model>

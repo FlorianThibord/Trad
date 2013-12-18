@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Model>
+  <NoExpNode scadeName="Op_plus" targetCycleFct="Op_plus">
+    <Input scadeName="xx" scadeType="int" targetName="xx" targetType="kcg_int"/>
+    <Input scadeName="yy" scadeType="int" targetName="yy" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
+    <Local scadeName="zz" scadeType="int" targetName="zz" targetType="kcg_int"/>
+  </NoExpNode>
+  <NoExpNode scadeName="Op_minus" targetCycleFct="Op_minus">
+    <Input scadeName="xx" scadeType="int" targetName="xx" targetType="kcg_int"/>
+    <Input scadeName="yy" scadeType="int" targetName="yy" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
+    <Local scadeName="zz" scadeType="int" targetName="zz" targetType="kcg_int"/>
+  </NoExpNode>
+</Model>

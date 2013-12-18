@@ -255,7 +255,15 @@ let print_concrete_var ppt reg_list =
   else 
     fprintf ppt "CONCRETE_VARIABLES %a" print_idlist_comma reg_list 
 
+let string_of_formatter print x =
+  let buf = Buffer.create 0 in
+  let ppt = formatter_of_buffer buf in
+  print ppt x;
+  Buffer.contents buf
 
+let print_list_comma print ppt l =
+  fprintf ppt "%s"
+    (String.concat ", " (List.map (string_of_formatter print) l))
 
 let print_imports_root sees ppt imports =
   let print_import ppt import =
@@ -268,20 +276,11 @@ let print_imports_root sees ppt imports =
 	    (print_instname import.b_import_name) import.b_instance_id 
 	    print_bid import.b_import_name
 	    print_expr_list p
-  in 
-  let rec print_import_list_comma ppt = function
-    | [] -> ()
-    | [import] -> fprintf ppt "%a" print_import import
-    | import :: l -> fprintf ppt "%a, %a" print_import import print_import_list_comma l
   in
-  let print_sees_import ppt sees =
-    if (List.length sees) = 0 then () else 
-      fprintf ppt ", %a" print_idlist_comma sees
-  in
-  if ((List.length imports) = 0) && ((List.length sees) = 0) then () 
-  else 
-    fprintf ppt "IMPORTS %a %a" print_import_list_comma imports
-      print_sees_import sees
+  let import_strs = List.map (string_of_formatter print_import) imports in
+  let all_strs = import_strs @ sees in
+  if all_strs != [] then
+    fprintf ppt "IMPORTS %a" print_idlist_comma all_strs
 
 let print_imports ppt imports =
   let print_import ppt import =
@@ -295,14 +294,8 @@ let print_imports ppt imports =
 	    print_bid import.b_import_name
 	    print_expr_list p
   in
-  let rec print_import_list_comma ppt = function
-    | [] -> ()
-    | [import] -> fprintf ppt "%a" print_import import
-    | import :: l -> fprintf ppt "%a, %a" print_import import print_import_list_comma l
-  in
-  if (List.length imports) = 0 then () 
-  else 
-    fprintf ppt "IMPORTS %a" print_import_list_comma imports
+  if imports != [] then
+    fprintf ppt "IMPORTS %a" (print_list_comma print_import) imports
 
 let print_sees ppt sees_l =
   if (List.length sees_l) = 0 then () 

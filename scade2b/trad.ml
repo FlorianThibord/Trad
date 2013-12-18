@@ -16,7 +16,7 @@ exception Register_cond_error of string
 let id_to_bid env id =
 try
   let bid, _, _ = Env.find id env in bid
-with Not_found -> assert false
+with Not_found -> failwith ("Identifier not found: '"^id^"'")
 
 let rec n_expr_to_b_expr env = function
   | NE_Ident id ->  BE_Ident (id_to_bid env id)

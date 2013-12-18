@@ -1,0 +1,17 @@
+IMPLEMENTATION M_Id_int_i
+REFINES M_Id_int
+IMPORTS M_Enum
+
+
+
+
+
+OPERATIONS
+
+yy <-- Id_int(xx) =
+ VAR zz IN
+   zz := xx; 
+   yy := zz
+   
+ END 
+END

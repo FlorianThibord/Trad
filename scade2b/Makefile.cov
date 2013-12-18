@@ -1,0 +1,76 @@
+.PHONY: all report clean
+all: dep clean tests report
+EXEC=scade2b.cov
+MODS=\
+    ast_base \
+    ast_printer_norm \
+    ast_prog \
+    ast_kcg \
+    ast_repr_b \
+    ast_scade_norm \
+    ast_scade \
+    ast_xml \
+    babst_generator \
+    babsterror_generator \
+    benum_generator \
+    utils \
+    bconst_generator \
+    bimpl_generator \
+    scheduler \
+    normalizer \
+    lexer_scade \
+    parser_kcg \
+    lexer_kcg \
+    parser_scade \
+    trad \
+    lexer_xml \
+    printer_xml_ast \
+    prog_builder \
+    xml_utils \
+    parser_xml \
+    scade2b
+
+OBJS=$(addsuffix .cmo,$(MODS))
+BISECT_DIR=$(shell ocamlc -where)/../bisect/
+BISECT_P4=camlp4o str.cma $(shell ocamlc -where)/../bisect/bisect_pp.cmo
+
+dep:
+	ocamldep *.ml > .depends
+
+%.cmo: %.ml
+	ocamlc \
+	    -I $(BISECT_DIR) -pp "$(BISECT_P4)" \
+	    -c $<
+
+%.ml: %.mly
+	ocamlyacc $< && rm $*.mli
+
+%.ml: %.mll
+	ocamllex $<
+
+$(EXEC): $(OBJS)
+	ocamlc \
+	    -I $(BISECT_DIR) $(shell ocamlc -where)/../bisect/bisect.cma \
+	    -o $@ \
+	    unix.cma \
+	    $+
+
+tests: $(EXEC)
+	$(MAKE) check_cov
+
+report:
+	bisect-report `find . -name 'bisect*.out'` -html bisect-report
+
+clean:
+	rm -f $(EXEC) *.cmo *.cmi *.cmp *.out
+
+# extra deps
+
+lexer_xml.cmo: parser_xml.cmo
+scade2b.cmo: parser_xml.cmo
+scade2b.cmo: lexer_xml.cmo
+scade2b.cmo: parser_scade.cmo
+scade2b.cmo: lexer_scade.cmo
+lexer_scade.cmo: parser_scade.cmo
+
+-include .depends
