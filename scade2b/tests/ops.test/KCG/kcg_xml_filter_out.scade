@@ -15,3 +15,40 @@ let
   zz = xx - yy;
   rr = zz;
 tel
+
+function Op_xor(xx : int; yy : int)
+  returns (rr : int)
+var
+  zz : int;
+let
+  zz = xx xor yy;
+  rr = zz;
+tel
+
+function Op_cmp (aa: int; bb: int; cc: int; dd: int; ee: int; ff: int)
+  returns (rr : bool)
+var
+  zz : bool;
+let
+  zz = ((aa <= bb) or (aa >= bb))
+   and ((cc <  dd) or (cc >  dd))
+   and ((ee =  ff) or (ee <> ff));
+  rr = zz;
+tel
+
+function Op_unops(aa: int)
+  returns (rr: int)
+var
+ bb: int;
+ cc: int;
+let
+  bb = -aa;
+  cc = int (real 0);
+  rr = bb + cc;
+tel
+
+function Op_div(aa: int; bb: int)
+  returns (rr: int)
+let
+  rr = aa div bb;
+tel

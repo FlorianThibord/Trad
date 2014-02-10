@@ -3,13 +3,13 @@ all: dep clean tests report
 EXEC=scade2b.cov
 MODS=\
     ast_base \
-    ast_printer_norm \
     ast_prog \
     ast_kcg \
     ast_repr_b \
     ast_scade_norm \
     ast_scade \
     ast_xml \
+    printer \
     babst_generator \
     babsterror_generator \
     benum_generator \

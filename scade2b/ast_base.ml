@@ -12,10 +12,16 @@ type base_type =
 | T_Int
 | T_Float
 
-type op_arith =
-  Op_eq | Op_neq | Op_lt | Op_le | Op_gt | Op_ge
+type op_arith1 =
+ Op_minus | Op_cast_real | Op_cast_int
+
+type op_arith2 =
+  Op_eq | Op_neq
 | Op_add | Op_sub | Op_mul | Op_div | Op_mod
-| Op_div_f | Op_minus | Op_cast_real | Op_cast_int
+| Op_div_f
 
 type op_logic =
-  Op_and | Op_or | Op_xor | Op_not | Op_sharp
+  Op_and | Op_or | Op_xor
+
+type op_relat =
+| Op_lt | Op_le | Op_gt | Op_ge

@@ -1,0 +1,17 @@
+IMPLEMENTATION M_Op_div_i
+REFINES M_Op_div
+SEES M_Enum
+
+
+
+
+
+
+OPERATIONS
+
+rr <-- Op_div(aa, bb) =
+ 
+   rr := aa / bb
+   
+  
+END

@@ -4,23 +4,12 @@ open Format
 open Ast_kcg
 open Ast_scade_norm
 open Ast_prog
-
-
-let env = ref Env.empty
-
-let print_bid ppt id =
-  let bid = Env.find id !env in
-  fprintf ppt "%s" bid
-
-let rec print_elt_list ppt = function
-  | [] -> ()
-  | [e] -> fprintf ppt "%a" print_bid e
-  | e::l -> fprintf ppt "%a, %a" print_bid e print_elt_list l 
+open Printer
 
 let print_enum ppt enum =
   fprintf ppt "%s = {%a}" 
     enum.p_enum_id
-    print_elt_list enum.p_enum_list
+    print_idlist_comma enum.p_enum_list
 
 let rec print_enum_list ppt = function 
   | [] -> ()
@@ -38,5 +27,6 @@ let print_machine ppt enum_list =
     print_sets_clause enum_list
 
 let print_m_enum enum_list file env_prog =
-  env := env_prog;
-  fprintf (formatter_of_out_channel file) "%a@." print_machine enum_list
+    with_env env_prog (fun () ->
+        fprintf (formatter_of_out_channel file) "%a@." print_machine enum_list
+    )

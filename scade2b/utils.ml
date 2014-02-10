@@ -332,8 +332,12 @@ let find_ident_in_pexpr expr consts =
     | PE_Value v -> ()
     | PE_Array array -> idarray_finder array
     | PE_Call (_, _, elist) -> List.iter ident_finder elist
-    | PE_Op_Arith (_, elist) -> List.iter ident_finder elist
-    | PE_Op_Logic (_, elist) -> List.iter ident_finder elist
+    | PE_Op_Arith1 (_, e) -> ident_finder e
+    | PE_Op_Arith2 (_, e1, e2)
+    | PE_Op_Relat (_, e1, e2) -> ident_finder e1;ident_finder e2
+    | PE_Op_Sharp elist -> List.iter ident_finder elist
+    | PE_Op_Not e -> ident_finder e
+    | PE_Op_Logic (_, e1, e2) -> ident_finder e1 ; ident_finder e2
     | PE_Fby (e1, e2, e3) -> ident_finder e1; ident_finder e2; ident_finder e3
     | PE_If (e1, e2, e3) -> ident_finder e1; ident_finder e2; ident_finder e3
   and idarray_finder = function
@@ -352,8 +356,16 @@ let rec rename_id_expr old new_i = function
   | NE_Ident i -> if i = old then NE_Ident new_i else NE_Ident i
   | NE_Value v -> NE_Value v
   | NE_Array ar -> NE_Array (rename_id_array old new_i ar)
-  | NE_Op_Arith (op, e_list) -> NE_Op_Arith (op, (List.map (rename_id_expr old new_i) e_list))
-  | NE_Op_Logic (op, e_list) -> NE_Op_Logic (op, (List.map (rename_id_expr old new_i) e_list))
+  | NE_Op_Arith1 (op, e) -> NE_Op_Arith1 (op, rename_id_expr old new_i e)
+  | NE_Op_Arith2 (op, e1, e2) -> NE_Op_Arith2 (op, rename_id_expr old new_i e1,
+                                                   rename_id_expr old new_i e2)
+  | NE_Op_Relat (op, e1, e2) -> NE_Op_Relat (op, rename_id_expr old new_i e1,
+                                                 rename_id_expr old new_i e2)
+  | NE_Op_Logic (op, e1, e2) -> NE_Op_Logic (op, rename_id_expr old new_i e1,
+                                                 rename_id_expr old new_i e2)
+  | NE_Op_Sharp (e_list) -> NE_Op_Sharp (List.map (rename_id_expr old new_i) e_list)
+  | NE_Op_Not e -> NE_Op_Not (rename_id_expr old new_i e)
+
 and rename_id_array old new_i = function
   | NA_Def e_list -> NA_Def (List.map (rename_id_expr old new_i) e_list)
   | NA_Caret (e1, e2) -> NA_Caret (rename_id_expr old new_i e1, rename_id_expr old new_i e2)
@@ -374,8 +386,9 @@ let rec p_expr_to_b_expr = function
   | PE_Ident id ->  BE_Ident id
   | PE_Value v -> BE_Value v
   | PE_Array ar -> BE_Array (p_array_to_b_array ar)
-  | PE_Op_Arith (op, e_list) -> BE_Op_Arith (op, (List.map p_expr_to_b_expr e_list))
-  | PE_Op_Logic (op, e_list) -> BE_Op_Logic (op, (List.map p_expr_to_b_expr e_list))
+  | PE_Op_Arith1 (op, e) -> BE_Op_Arith1 (op, p_expr_to_b_expr e)
+  | PE_Op_Arith2 (op, e1, e2) -> BE_Op_Arith2 (op, p_expr_to_b_expr e1, p_expr_to_b_expr e2)
+  | PE_Op_Relat (op, e1, e2) -> BE_Pred (BP_Op_Relat (op, p_expr_to_b_expr e1, p_expr_to_b_expr e2))
   | _ -> assert false
 
 and p_array_to_b_array = function

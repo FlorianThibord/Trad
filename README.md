@@ -94,3 +94,9 @@ ensuite visible dans `bisect-report`.
 Attention, cela crée de nombreux fichiers temporaires dans le répertoire
 courant. `ocamlbuild` permet d'en supprimer une partie via `_build/sanitize.sh`
 mais il reste les `*.cmp` et `*.out`.
+
+Doc
+---
+
+[Référence B](http://www.tools.clearsy.com/resources/Manrefb_en.pdf)
+[Symboles B](http://www.tools.clearsy.com/resources/Symboles_en.pdf)

@@ -1,0 +1,19 @@
+IMPLEMENTATION M_Op_unops_i
+REFINES M_Op_unops
+SEES M_Enum
+
+
+
+
+
+
+OPERATIONS
+
+rr <-- Op_unops(aa) =
+ VAR bb, cc IN
+   cc := (INT ((REAL (0)))); 
+   bb := (-aa); 
+   rr := bb + cc
+   
+ END 
+END

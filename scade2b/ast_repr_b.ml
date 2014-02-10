@@ -5,9 +5,17 @@ open Ast_base
 type b_expression =
   BE_Ident of ident
 | BE_Value of value
-| BE_Op_Arith of op_arith * b_expression list
-| BE_Op_Logic of op_logic * b_expression list
+| BE_Op_Arith1 of op_arith1 * b_expression
+| BE_Op_Arith2 of op_arith2 * b_expression * b_expression
+| BE_Op_Sharp of b_expression list
 | BE_Array of array_expr
+| BE_Pred of b_predicate
+
+and b_predicate =
+| BP_Op_Logic of op_logic * b_predicate * b_predicate
+| BP_Op_Relat of op_relat * b_expression * b_expression
+| BP_Not of b_predicate
+| BP_Expr of b_expression
 
 and array_expr =
   BA_Def of b_expression list

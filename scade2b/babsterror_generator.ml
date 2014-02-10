@@ -6,15 +6,7 @@ open Ast_repr_b
 open Ast_base
 open Ast_xml
 open Xml_utils
-
-
-let print_bid ppt id =
-  fprintf ppt "%s" id
-
-let rec print_idlist_comma ppt = function
-  | [] -> ()
-  | [id] -> fprintf ppt "%a" print_bid id
-  | id::l -> fprintf ppt "%a, %a" print_bid id print_idlist_comma l
+open Printer
 
 let print_type ppt typ =
   match typ with

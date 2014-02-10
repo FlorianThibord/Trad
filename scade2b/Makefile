@@ -74,4 +74,4 @@ check: $(patsubst %.test, %.ok, $(wildcard tests/*.test))
 	[ -e $< -a ! -s $< ] && touch $@
 
 check_clean:
-	rm -r tests/*/Machines_B/ tests/*.ok tests/*.diff
+	rm -rf tests/*/Machines_B/ tests/*.ok tests/*.diff

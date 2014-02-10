@@ -25,8 +25,12 @@ let ident_of_expr expr =
   let rec idexpr_rec = function
     | NE_Ident iden -> id := L.add iden !id
     | NE_Value v -> ()
-    | NE_Op_Arith (_, e_list) -> List.iter idexpr_rec e_list
-    | NE_Op_Logic (_, e_list) -> List.iter idexpr_rec e_list
+    | NE_Op_Arith1 (_, e) -> idexpr_rec e
+    | NE_Op_Arith2 (_, e1, e2)
+    | NE_Op_Relat (_, e1, e2) -> idexpr_rec e1;idexpr_rec e2
+    | NE_Op_Logic (_, e1, e2) -> idexpr_rec e1;idexpr_rec e2
+    | NE_Op_Sharp e_list -> List.iter idexpr_rec e_list
+    | NE_Op_Not e -> idexpr_rec e
     | NE_Array array -> idarray_rec array
   and idarray_rec = function
     | NA_Def elist -> List.iter idexpr_rec elist

@@ -146,26 +146,26 @@ expr :
  | INT { PE_Value (Int $1) }
  | BOOL { PE_Value (Bool $1) }
  | REAL { PE_Value (Float $1) }
- | expr PLUS expr { PE_Op_Arith (Op_add, [$1; $3]) }
- | expr MINUS expr { PE_Op_Arith (Op_sub, [$1; $3]) }
- | expr MULT expr { PE_Op_Arith (Op_mul, [$1; $3]) }
- | expr DIV expr { PE_Op_Arith (Op_div_f, [$1; $3]) }
- | expr DIV_INT expr { PE_Op_Arith (Op_div, [$1; $3]) }
- | expr MOD expr { PE_Op_Arith (Op_mod, [$1; $3]) }
- | expr EQ expr { PE_Op_Arith (Op_eq, [$1; $3]) }
- | expr NEQ expr { PE_Op_Arith (Op_neq, [$1; $3]) }
- | expr INF expr { PE_Op_Arith (Op_lt, [$1; $3]) }
- | expr INFEQ expr { PE_Op_Arith (Op_le, [$1; $3]) }
- | expr SUP expr { PE_Op_Arith (Op_gt, [$1; $3]) }
- | expr SUPEQ expr { PE_Op_Arith (Op_ge, [$1; $3]) }
- | MINUS expr { PE_Op_Arith (Op_minus, [$2]) }
- | T_REAL expr { PE_Op_Arith (Op_cast_real, [$2]) } 
- | T_INT expr { PE_Op_Arith (Op_cast_int, [$2]) } 
- | SHARP LPAREN expr COMMA expr_list RPAREN { PE_Op_Logic (Op_sharp, ($3 :: $5)) }
- | expr AND expr { PE_Op_Logic (Op_and, [$1; $3]) }
- | expr OR expr { PE_Op_Logic (Op_or, [$1; $3]) }
- | expr XOR expr { PE_Op_Logic (Op_xor, [$1; $3]) }
- | NOT expr { PE_Op_Logic (Op_not, [$2]) }
+ | expr PLUS expr { PE_Op_Arith2 (Op_add, $1, $3) }
+ | expr MINUS expr { PE_Op_Arith2 (Op_sub, $1, $3) }
+ | expr MULT expr { PE_Op_Arith2 (Op_mul, $1, $3) }
+ | expr DIV expr { PE_Op_Arith2 (Op_div_f, $1, $3) }
+ | expr DIV_INT expr { PE_Op_Arith2 (Op_div, $1, $3) }
+ | expr MOD expr { PE_Op_Arith2 (Op_mod, $1, $3) }
+ | expr EQ expr { PE_Op_Arith2 (Op_eq, $1, $3) }
+ | expr NEQ expr { PE_Op_Arith2 (Op_neq, $1, $3) }
+ | expr INF expr { PE_Op_Relat (Op_lt, $1, $3) }
+ | expr INFEQ expr { PE_Op_Relat (Op_le, $1, $3) }
+ | expr SUP expr { PE_Op_Relat (Op_gt, $1, $3) }
+ | expr SUPEQ expr { PE_Op_Relat (Op_ge, $1, $3) }
+ | MINUS expr { PE_Op_Arith1 (Op_minus, $2) }
+ | T_REAL expr { PE_Op_Arith1 (Op_cast_real, $2) }
+ | T_INT expr { PE_Op_Arith1 (Op_cast_int, $2) }
+ | SHARP LPAREN expr COMMA expr_list RPAREN { PE_Op_Sharp ($3 :: $5) }
+ | expr AND expr { PE_Op_Logic (Op_and, $1, $3) }
+ | expr OR expr { PE_Op_Logic (Op_or, $1, $3) }
+ | expr XOR expr { PE_Op_Logic (Op_xor, $1, $3) }
+ | NOT expr { PE_Op_Not $2 }
  | FBY LPAREN expr SEMICOL expr SEMICOL expr RPAREN { PE_Fby ($3, $5, $7) }
  | IF expr THEN expr ELSE expr { PE_If ($2, $4, $6) }
  | LPAREN PRAGMA IDENT DOUBLE_COLON IDENT DOUBLE_CHEVIN expr_list DOUBLE_CHEVOUT RPAREN LPAREN expr_list RPAREN 

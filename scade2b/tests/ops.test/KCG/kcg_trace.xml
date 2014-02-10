@@ -12,4 +12,31 @@
     <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
     <Local scadeName="zz" scadeType="int" targetName="zz" targetType="kcg_int"/>
   </NoExpNode>
+  <NoExpNode scadeName="Op_xor" targetCycleFct="Op_xor">
+    <Input scadeName="xx" scadeType="int" targetName="xx" targetType="kcg_int"/>
+    <Input scadeName="yy" scadeType="int" targetName="yy" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
+    <Local scadeName="zz" scadeType="int" targetName="zz" targetType="kcg_int"/>
+  </NoExpNode>
+  <NoExpNode scadeName="Op_cmp" targetCycleFct="Op_cmp">
+    <Input scadeName="aa" scadeType="int" targetName="aa" targetType="kcg_int"/>
+    <Input scadeName="bb" scadeType="int" targetName="bb" targetType="kcg_int"/>
+    <Input scadeName="cc" scadeType="int" targetName="cc" targetType="kcg_int"/>
+    <Input scadeName="dd" scadeType="int" targetName="dd" targetType="kcg_int"/>
+    <Input scadeName="ee" scadeType="int" targetName="ee" targetType="kcg_int"/>
+    <Input scadeName="ff" scadeType="int" targetName="ff" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="bool" targetName="rr" targetType="kcg_bool"/>
+    <Local scadeName="zz" scadeType="bool" targetName="zz" targetType="kcg_bool"/>
+  </NoExpNode>
+  <NoExpNode scadeName="Op_unops" targetCycleFct="Op_unops">
+    <Input scadeName="aa" scadeType="int" targetName="aa" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
+    <Local scadeName="bb" scadeType="int" targetName="bb" targetType="kcg_int"/>
+    <Local scadeName="cc" scadeType="int" targetName="cc" targetType="kcg_int"/>
+  </NoExpNode>
+  <NoExpNode scadeName="Op_div" targetCycleFct="Op_div">
+    <Input scadeName="aa" scadeType="int" targetName="aa" targetType="kcg_int"/>
+    <Input scadeName="bb" scadeType="int" targetName="bb" targetType="kcg_int"/>
+    <Output scadeName="rr" scadeType="int" targetName="rr" targetType="kcg_int"/>
+  </NoExpNode>
 </Model>
