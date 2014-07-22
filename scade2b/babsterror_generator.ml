@@ -77,13 +77,13 @@ let print_id_machine ppt id_machine =
 
 let print_machine_wc ppt xml_decl =
   fprintf ppt
-    "MACHINE %a@\n%a@\n%a @\nEND"
+    "MACHINE %a@\n%a@\n @\nEND"
     print_id_machine xml_decl.xml_node_name
     print_operation_wc xml_decl
 
 let print_machine conditions ppt xml_decl =
   fprintf ppt
-    "MACHINE %a@\n%a@\n%a @\nEND"
+    "MACHINE %a@\n%a@\n @\nEND"
     print_id_machine xml_decl.xml_node_name
     (print_operation conditions) xml_decl
 

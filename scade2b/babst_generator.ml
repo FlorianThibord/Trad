@@ -20,12 +20,13 @@ let print_then_condition ppt = function
       print_bid ens_id
       print_basetype t
   | Fun_expr (id, t, e_list, expr, ens_id, index) ->
-    fprintf ppt "%a :: { %a | %a : %a & !%s.(%s : INT => %a) } "
+    fprintf ppt "%a :: { %a | %a : %a & !%s.(%s : dom(%a) => %a) } "
       print_bid id
       print_bid ens_id
       print_bid ens_id
       (print_array_type t) e_list 
       index index
+      print_bid ens_id
       print_expr_in_pred expr;
   | Fun_no_expr (id, t, e_list, ens_id) ->
     fprintf ppt "%a :: { %a | %a : %a }"
@@ -54,10 +55,11 @@ let print_pre_condition ppt = function
 	print_bid id
 	print_basetype t
   | Fun_expr (id, t, e_list, expr,_, index) ->
-    fprintf ppt "%a : %a & !%s.(%s : INT => %a)"
+    fprintf ppt "%a : %a & !%s.(%s : dom(%a) => %a)"
       print_bid id
       (print_array_type t) e_list
       index index
+      print_bid id
       print_expr_in_pred expr
   | Fun_no_expr (id, t, e_list, _) ->
     fprintf ppt "%a : %a"
